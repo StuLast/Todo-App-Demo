@@ -6,7 +6,9 @@ const todos = [
     { text: 'have shower', completed: true}
 ];
 
-
+const filters = {
+    text: ""
+}
 
 const getTodos = (todos) => {
     incompleteTodos(todos);
@@ -15,24 +17,49 @@ const getTodos = (todos) => {
     })
 };
 
+
 const incompleteTodos = (todos) => {
     const newDiv = document.createElement('div');
     const incompleteTodos = todos.filter((todo) => {
         return !todo.completed;
     });
     newDiv.innerHTML = `<h2>You have ${incompleteTodos.length} todos left to complete<h2>`;
-    document.querySelector("#app").appendChild(newDiv);
+    document.querySelector('#todos').appendChild(newDiv);
+};
+
+const renderTodos  = (todos, filter) => {
+    const filteredTodos = todos.filter((todo) => {
+        return todo.text.toLowerCase().includes(filter.text.toLowerCase())
+    })
+    document.querySelector('#todos').innerHTML = "";
+    incompleteTodos(todos);
+    filteredTodos.forEach((todo) => {
+        renderTodo(todo);
+    });
 };
 
 const renderTodo = (todo) => {
     const newDiv = document.createElement('div');
     newDiv.innerHTML = `<p>${todo.text}</p>`;
-    document.querySelector("#app").appendChild(newDiv);
+    document.querySelector('#todos').appendChild(newDiv);
 };
 
 getTodos(todos);
 
-document.querySelector("#btn_add_todo").addEventListener('click', (e) => {
+document.querySelector('#btn_add_todo').addEventListener('click', (e) => {
     e.preventDefault();
     console.log("Adding new todo");
 });
+
+document.querySelector('#input-add-todo').addEventListener('input', (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+});
+
+document.querySelector('#input-search-todo').addEventListener('input', (e) => {
+    e.preventDefault();
+    filters.text = e.target.value;
+    renderTodos(todos, filters);
+});
+
+renderTodos(todos, filters);
