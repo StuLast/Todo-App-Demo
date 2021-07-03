@@ -27,11 +27,12 @@ const incompleteTodos = (todos) => {
 
 const renderTodos  = (todos, filter) => {
     const filteredTodos = todos.filter((todo) => {
-        return todo.text.toLowerCase().includes(filter.text.toLowerCase()) && !todo.completed
+        return todo.text.toLowerCase().includes(filter.text.toLowerCase());
     })
 
     document.querySelector('#todos').innerHTML = "";
     incompleteTodos(filteredTodos);
+    sortTodos(filteredTodos);
     filteredTodos.forEach((todo) => {
         renderTodo(todo);
     });
@@ -43,17 +44,26 @@ const renderTodo = (todo) => {
     document.querySelector('#todos').appendChild(newDiv);
 };
 
+const sortTodos = (todos) => {
+    todos.sort((a, b) => {
+        if(!a.completed && b.completed) {
+            return -1;
+        } else if (a.completed && !b.completed) {
+            return 1;
+        } else {
+            return 0;
+        }
+    })
+}
+
 //Define event listeners
 //======================
 
-document.querySelector('#btn_add_todo').addEventListener('click', (e) => {
+document.querySelector('#add-todo').addEventListener('submit', (e) => {
     e.preventDefault();
-    console.log("Adding new todo");
-});
-
-document.querySelector('#input-add-todo').addEventListener('input', (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
+    const dataSource = e.target.elements.inputAddTodo
+    console.log(dataSource.value);
+    dataSource.value = ""; 
 });
 
 document.querySelector('#input-search-todo').addEventListener('input', (e) => {
@@ -61,7 +71,6 @@ document.querySelector('#input-search-todo').addEventListener('input', (e) => {
     filters.text = e.target.value;
     renderTodos(todos, filters);
 });
-
 
 //startup
 //=======
