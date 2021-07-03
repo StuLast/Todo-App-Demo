@@ -1,3 +1,6 @@
+//Arrays for development
+//======================
+
 const todos = [
     { text: 'Make coffee', completed: true},
     { text: 'Drink coffee', completed: false},
@@ -10,13 +13,8 @@ const filters = {
     text: ""
 }
 
-const getTodos = (todos) => {
-    incompleteTodos(todos);
-    todos.forEach((todo) => {
-        renderTodo(todo);
-    })
-};
-
+//Functions
+//=========
 
 const incompleteTodos = (todos) => {
     const newDiv = document.createElement('div');
@@ -29,10 +27,11 @@ const incompleteTodos = (todos) => {
 
 const renderTodos  = (todos, filter) => {
     const filteredTodos = todos.filter((todo) => {
-        return todo.text.toLowerCase().includes(filter.text.toLowerCase())
+        return todo.text.toLowerCase().includes(filter.text.toLowerCase()) && !todo.completed
     })
+
     document.querySelector('#todos').innerHTML = "";
-    incompleteTodos(todos);
+    incompleteTodos(filteredTodos);
     filteredTodos.forEach((todo) => {
         renderTodo(todo);
     });
@@ -44,7 +43,8 @@ const renderTodo = (todo) => {
     document.querySelector('#todos').appendChild(newDiv);
 };
 
-getTodos(todos);
+//Define event listeners
+//======================
 
 document.querySelector('#btn_add_todo').addEventListener('click', (e) => {
     e.preventDefault();
@@ -62,4 +62,7 @@ document.querySelector('#input-search-todo').addEventListener('input', (e) => {
     renderTodos(todos, filters);
 });
 
+
+//startup
+//=======
 renderTodos(todos, filters);
