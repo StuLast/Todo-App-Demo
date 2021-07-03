@@ -6,6 +6,8 @@ const todos = [
     { text: 'have shower', completed: true}
 ];
 
+
+
 const getTodos = (todos) => {
     incompleteTodos(todos);
     todos.forEach((todo) => {
