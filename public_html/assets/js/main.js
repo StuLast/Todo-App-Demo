@@ -62,8 +62,12 @@ const sortTodos = (todos) => {
 document.querySelector('#add-todo').addEventListener('submit', (e) => {
     e.preventDefault();
     const dataSource = e.target.elements.inputAddTodo
-    console.log(dataSource.value);
+    todos.push({
+        text:dataSource.value,
+        completed: false
+    });
     dataSource.value = ""; 
+    renderTodos(todos, filters);
 });
 
 document.querySelector('#input-search-todo').addEventListener('input', (e) => {
