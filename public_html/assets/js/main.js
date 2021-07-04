@@ -10,7 +10,8 @@ const todos = [
 ];
 
 const filters = {
-    text: ""
+    text: "",
+    hideCompletedTodos: false
 }
 
 //Functions
@@ -26,11 +27,18 @@ const incompleteTodos = (todos) => {
 };
 
 const renderTodos  = (todos, filter) => {
-    const filteredTodos = todos.filter((todo) => {
-        return todo.text.toLowerCase().includes(filter.text.toLowerCase());
-    })
-
+    
+    //Clear todos list
     document.querySelector('#todos').innerHTML = "";
+
+    //Carry out filtering
+    const filteredTodos = todos.filter((todo) => {
+        const searchFilterMatch = todo.text.toLowerCase().includes(filter.text.toLowerCase());
+        const completedMatch = filter.hideCompletedTodos ? !todo.completed : true;
+        return searchFilterMatch && completedMatch;
+    });
+
+    //Render data
     incompleteTodos(filteredTodos);
     sortTodos(filteredTodos);
     filteredTodos.forEach((todo) => {
@@ -73,6 +81,11 @@ document.querySelector('#add-todo').addEventListener('submit', (e) => {
 document.querySelector('#input-search-todo').addEventListener('input', (e) => {
     e.preventDefault();
     filters.text = e.target.value;
+    renderTodos(todos, filters);
+});
+
+document.querySelector('#hide-completed-todos').addEventListener('change', (e) => {
+    filters.hideCompletedTodos = e.target.checked;
     renderTodos(todos, filters);
 });
 
