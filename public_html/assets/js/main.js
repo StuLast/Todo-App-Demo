@@ -1,68 +1,16 @@
-//Arrays for development
-//======================
+//Data Storage
 
-const todos = [
-    { text: 'Make coffee', completed: true},
-    { text: 'Drink coffee', completed: false},
-    { text: 'have breakfast', completed: false},
-    { text: 'go running', completed: true},
-    { text: 'have shower', completed: true}
-];
+let todos = getTodos();
 
 const filters = {
     text: "",
     hideCompletedTodos: false
 }
 
-//Functions
-//=========
+//startup
+//=======
 
-const incompleteTodos = (todos) => {
-    const newDiv = document.createElement('div');
-    const incompleteTodos = todos.filter((todo) => {
-        return !todo.completed;
-    });
-    newDiv.innerHTML = `<h2>You have ${incompleteTodos.length} todos left to complete<h2>`;
-    document.querySelector('#todos').appendChild(newDiv);
-};
-
-const renderTodos  = (todos, filter) => {
-    
-    //Clear todos list
-    document.querySelector('#todos').innerHTML = "";
-
-    //Carry out filtering
-    const filteredTodos = todos.filter((todo) => {
-        const searchFilterMatch = todo.text.toLowerCase().includes(filter.text.toLowerCase());
-        const completedMatch = filter.hideCompletedTodos ? !todo.completed : true;
-        return searchFilterMatch && completedMatch;
-    });
-
-    //Render data
-    incompleteTodos(filteredTodos);
-    sortTodos(filteredTodos);
-    filteredTodos.forEach((todo) => {
-        renderTodo(todo);
-    });
-};
-
-const renderTodo = (todo) => {
-    const newDiv = document.createElement('div');
-    newDiv.innerHTML = `<p>${todo.text}</p>`;
-    document.querySelector('#todos').appendChild(newDiv);
-};
-
-const sortTodos = (todos) => {
-    todos.sort((a, b) => {
-        if(!a.completed && b.completed) {
-            return -1;
-        } else if (a.completed && !b.completed) {
-            return 1;
-        } else {
-            return 0;
-        }
-    })
-}
+renderTodos(todos, filters);
 
 //Define event listeners
 //======================
@@ -74,6 +22,7 @@ document.querySelector('#add-todo').addEventListener('submit', (e) => {
         text:dataSource.value,
         completed: false
     });
+    setTodos(todos);
     dataSource.value = ""; 
     renderTodos(todos, filters);
 });
@@ -89,6 +38,5 @@ document.querySelector('#hide-completed-todos').addEventListener('change', (e) =
     renderTodos(todos, filters);
 });
 
-//startup
-//=======
-renderTodos(todos, filters);
+
+
