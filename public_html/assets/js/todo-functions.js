@@ -42,14 +42,25 @@ const renderTodos  = (todos, filter) => {
     incompleteTodos(filteredTodos);
     sortTodos(filteredTodos);
     filteredTodos.forEach((todo) => {
-        renderTodo(todo);
+        document.querySelector('#todos').appendChild(generateTodoDOM(todo));
     });
 };
 
-const renderTodo = (todo) => {
+const generateTodoDOM = (todo) => {
     const newDiv = document.createElement('div');
-    newDiv.innerHTML = `<p>${todo.text}</p>`;
-    document.querySelector('#todos').appendChild(newDiv);
+    const newCheckBox = document.createElement('input')
+    const newText = document.createElement('span');
+    const newButton = document.createElement('button');
+
+    newCheckBox.setAttribute('type', 'checkbox');
+    newText.textContent = todo.text;
+    newButton.textContent = 'X';
+
+    newDiv.appendChild(newCheckBox);
+    newDiv.appendChild(newText);
+    newDiv.appendChild(newButton);
+
+    return newDiv;
 };
 
 const sortTodos = (todos) => {

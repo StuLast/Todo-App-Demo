@@ -17,11 +17,8 @@ renderTodos(todos, filters);
 
 document.querySelector('#add-todo').addEventListener('submit', (e) => {
     e.preventDefault();
-    const dataSource = e.target.elements.inputAddTodo
-    todos.push({
-        text:dataSource.value,
-        completed: false
-    });
+    const dataSource = e.target.elements.inputAddTodo;
+    todos.push({ text:dataSource.value, completed: false });
     setTodos(todos);
     dataSource.value = ""; 
     renderTodos(todos, filters);
