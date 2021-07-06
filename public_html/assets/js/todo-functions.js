@@ -14,6 +14,26 @@ const setTodos = function(todos) {
     localStorage.setItem('todos', JSON.stringify(todos));
 };
 
+const removeTodo = function (todos, id) {
+    const noteIndex = todos.findIndex((todo) => {
+        return todo.id === id;
+    });
+
+    if(noteIndex >= 0) {
+       todos.splice(noteIndex, 1);
+    }
+}
+
+const toggleTodo = function (id) {
+    const todo = todos.find((todo) => {
+        return todo.id === id;
+    });
+    
+    if(todo !== undefined) {
+        todo.completed = !todo.completed;
+    }
+};
+ 
 //Data Rendering
 //==============
 
@@ -51,8 +71,22 @@ const generateTodoDOM = (todo) => {
     const newCheckBox = document.createElement('input')
     const newText = document.createElement('span');
     const newButton = document.createElement('button');
+    
+    newButton.addEventListener('click', (e) => {
+        toggleTodo(todo.id);
+        setTodos(todos);
+        renderTodos(todos, filters);
+    });
 
     newCheckBox.setAttribute('type', 'checkbox');
+    newCheckBox.addEventListener('click', (e) => {
+        toggleTodo(todo.id);
+        setTodos(todos);
+        renderTodos(todos, filters);
+    });
+
+    newCheckBox.checked = todo.completed;
+
     newText.textContent = todo.text;
     newButton.textContent = 'X';
 
