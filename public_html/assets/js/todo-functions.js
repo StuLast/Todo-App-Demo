@@ -3,7 +3,12 @@
 
 const getTodos = function () {
     const todosJson = localStorage.getItem('todos');
-    return todosJson != null ? JSON.parse(todosJson) : [];
+    try {
+        return todosJson != null ? JSON.parse(todosJson) : [];
+    } catch (e) {
+        console.log('Local storage data is corrupt.  Data lost');
+        return [];
+    }
 };
 
 const setTodos = function(todos) {
