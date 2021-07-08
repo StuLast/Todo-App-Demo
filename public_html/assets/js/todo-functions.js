@@ -15,9 +15,7 @@ const setTodos = function(todos) {
 };
 
 const removeTodo = function (todos, id) {
-    const noteIndex = todos.findIndex((todo) => {
-        return todo.id === id;
-    });
+    const noteIndex = todos.findIndex((todo) =>  todo.id === id);
 
     if(noteIndex >= 0) {
        todos.splice(noteIndex, 1);
@@ -25,9 +23,7 @@ const removeTodo = function (todos, id) {
 }
 
 const toggleTodo = function (id) {
-    const todo = todos.find((todo) => {
-        return todo.id === id;
-    });
+    const todo = todos.find((todo) => todo.id === id);
     
     if(todo !== undefined) {
         todo.completed = !todo.completed;
@@ -39,9 +35,7 @@ const toggleTodo = function (id) {
 
 const incompleteTodos = (todos) => {
     const newDiv = document.createElement('div');
-    const incompleteTodos = todos.filter((todo) => {
-        return !todo.completed;
-    });
+    const incompleteTodos = todos.filter((todo) => !todo.completed);
     newDiv.innerHTML = `<h2>You have ${incompleteTodos.length} todos left to complete<h2>`;
     document.querySelector('#todos').appendChild(newDiv);
 };
