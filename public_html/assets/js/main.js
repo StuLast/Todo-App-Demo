@@ -1,3 +1,5 @@
+'use strict'
+
 //Data Storage
 
 let todos = getTodos();
