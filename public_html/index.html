@@ -4,20 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+    <link rel="icon" href="./assets/images/favicon.png">
     <title>Todo App</title>
 </head>
 <body>
-    <h1>Todo App Demo</h1>
-    <input type="text" name="input-search-todo" id="input-search-todo" placeholder="Search all todos">
-    <label for="hide-completed-todos">
-        <input type="checkbox" name="hide-completed-todos" id="hide-completed-todos">
-        Hide completed todos
-    </label>
-    <div id="todos"></div>
-    <form id="add-todo">
-        <input type="text" name="inputAddTodo" id="input-add-todo" placeholder="Add new todo text">
-        <button>Add todo</button>
-    </form>
+    <header class="header">
+        <div class="container">
+            <h1 class="header__title">Todo App Demo</h1>
+            <h2 class="header__subtitle">Pure Javascript Application Demo</h2>
+        </div>
+    </header>
+    <div class="actions">
+        <div class="actions__container">
+            <input class="input" type="text" name="input-search-todo" id="input-search-todo" placeholder="Search all todos">
+            <label class="checkbox" for="hide-completed-todos">
+                <input type="checkbox" name="hide-completed-todos" id="hide-completed-todos">
+                Hide completed todos
+            </label>
+            <a class="actions__link" href="/about.html">about</a>
+        </div>
+    </div>
+    <div class="container">
+        <form id="add-todo" class="add__todo">
+            <input class="input" type="text" name="inputAddTodo" id="input-add-todo" placeholder="Add new todo text">
+            <button class="button" >Add todo</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <div id="todos"></div>
+    </div>
+
     <script src="./assets/js/uuidV4.js"></script>
     <script src="./assets/js/todo-functions.js"></script>
     <script src="./assets/js/main.js"></script>

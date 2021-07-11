@@ -20,9 +20,15 @@ renderTodos(todos, filters);
 document.querySelector('#add-todo').addEventListener('submit', (e) => {
     e.preventDefault();
     const dataSource = e.target.elements.inputAddTodo;
+    const text = dataSource.value.trim();
+    if(!text) {
+        console.log("There is no content to add");
+        return;
+    }
+
     todos.push({
         id:  uuidv4(),
-        text:dataSource.value,
+        text,
         completed: false 
     });
     setTodos(todos);
@@ -37,6 +43,7 @@ document.querySelector('#input-search-todo').addEventListener('input', (e) => {
 });
 
 document.querySelector('#hide-completed-todos').addEventListener('change', (e) => {
+    e.preventDefault();
     filters.hideCompletedTodos = e.target.checked;
     renderTodos(todos, filters);
 });

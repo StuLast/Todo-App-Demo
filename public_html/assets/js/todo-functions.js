@@ -18,17 +18,16 @@ const setTodos = function(todos) {
 };
 
 const removeTodo = function (todos, id) {
-    const noteIndex = todos.findIndex((todo) =>  todo.id === id);
+    const noteIndex = todos.findIndex((todo) => todo.id === id);
 
     if(noteIndex >= 0) {
        todos.splice(noteIndex, 1);
     }
 }
 
-const toggleTodo = function (id) {
+const toggleTodo = function (todos, id) {
     const todo = todos.find((todo) => todo.id === id);
-    
-    if(!todo) {
+    if(todo) {
         todo.completed = !todo.completed;
     }
 };
@@ -38,15 +37,18 @@ const toggleTodo = function (id) {
 
 const incompleteTodos = (todos) => {
     const newDiv = document.createElement('div');
+    newDiv.classList.add('list-title');
     const incompleteTodos = todos.filter((todo) => !todo.completed);
-    newDiv.innerHTML = `<h2>You have ${incompleteTodos.length} todos left to complete<h2>`;
+    const plural = incompleteTodos.length === 1 ? `` :`s`;
+    newDiv.innerHTML = `<h2>You have ${incompleteTodos.length} todo${plural} left to complete<h2>`;
     document.querySelector('#todos').appendChild(newDiv);
 };
 
 const renderTodos  = (todos, filter) => {
+    const todosElement = document.querySelector('#todos');
     
     //Clear todos list
-    document.querySelector('#todos').innerHTML = "";
+    todosElement.innerHTML = "";
 
     //Carry out filtering
     const filteredTodos = todos.filter((todo) => {
@@ -58,40 +60,56 @@ const renderTodos  = (todos, filter) => {
     //Render data
     incompleteTodos(filteredTodos);
     sortTodos(filteredTodos);
+
+    if(filteredTodos.length < 1) {
+        console.log('Ther are no todos');
+        const message = document.createElement('p');
+        message.textContent = "There are currently no todos to show."
+        message.classList.add('empty-message');
+        todosElement.appendChild(message);
+        return;
+    }
+
     filteredTodos.forEach((todo) => {
-        document.querySelector('#todos').appendChild(generateTodoDOM(todo));
+        todosElement.appendChild(generateTodoDOM(todo));
     });
 };
 
 const generateTodoDOM = (todo) => {
-    const newDiv = document.createElement('div');
-    const newCheckBox = document.createElement('input')
-    const newText = document.createElement('span');
-    const newButton = document.createElement('button');
+    const todoLabel = document.createElement('label');
+    const todoContainer = document.createElement('div');
+    const todoCheckBox = document.createElement('input')
+    const todoText = document.createElement('span');
+    const todoRemoveButton = document.createElement('button');
+
+    todoRemoveButton.classList.add('button', 'button--text');
+    todoLabel.classList.add('list-item');
+    todoContainer.classList.add('list-item__container');
     
-    newButton.addEventListener('click', (e) => {
-        toggleTodo(todo.id);
+    todoRemoveButton.addEventListener('click', (e) => {
+        removeTodo(todos, todo.id);
         setTodos(todos);
         renderTodos(todos, filters);
     });
 
-    newCheckBox.setAttribute('type', 'checkbox');
-    newCheckBox.addEventListener('click', (e) => {
-        toggleTodo(todo.id);
+    todoCheckBox.setAttribute('type', 'checkbox');
+    todoCheckBox.addEventListener('click', (e) => {
+        toggleTodo(todos, todo.id);
         setTodos(todos);
         renderTodos(todos, filters);
     });
 
-    newCheckBox.checked = todo.completed;
+    todoCheckBox.checked = todo.completed;
 
-    newText.textContent = todo.text;
-    newButton.textContent = 'X';
+    todoText.textContent = todo.text;
+    todoRemoveButton.textContent = 'remove';
 
-    newDiv.appendChild(newCheckBox);
-    newDiv.appendChild(newText);
-    newDiv.appendChild(newButton);
+    todoContainer.appendChild(todoCheckBox);
+    todoContainer.appendChild(todoText);
+    todoLabel.appendChild(todoContainer);
+    todoLabel.appendChild(todoRemoveButton);
 
-    return newDiv;
+    return todoLabel;
 };
 
 const sortTodos = (todos) => {
