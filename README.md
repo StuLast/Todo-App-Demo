@@ -1,6 +1,7 @@
 # Todo App Demo
 
-This Notes app demo is a basic demonstration using on JS and HTML.
+This Todo app demo is a basic demonstration using on JS and HTML.  You can see a live version of the demo todo app at
+[http://todo-app.stulast.co.uk](http://todo-app.stulast.co.uk])
 
 ##  Prerequisites
 
