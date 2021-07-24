@@ -1,11 +1,8 @@
 import { getFilters } from "./filters";
-import { toggleTodo, setTodos, getTodos, removeTodo } from "./todos";
-
+import { toggleTodo, getTodos, removeTodo, setTodos } from "./todos";
 
 const filters = getFilters();
 const todos = getTodos();
-
-console.log(todos);
 
 const incompleteTodos = (todos) => {
     const newDiv = document.createElement('div');
@@ -47,7 +44,6 @@ const renderTodos  = () => {
     sortTodos(filteredTodos);
 
     if(filteredTodos.length < 1) {
-        console.log('Ther are no todos');
         const message = document.createElement('p');
         message.textContent = "There are currently no todos to show."
         message.classList.add('empty-message');
@@ -72,15 +68,15 @@ const generateTodoDOM = (todo) => {
     todoContainer.classList.add('list-item__container');
     
     todoRemoveButton.addEventListener('click', (e) => {
-        removeTodo(todos, todo.id);
-        setTodos(todos);
+        removeTodo(todo.id);
+        setTodos();
         renderTodos();
     });
 
     todoCheckBox.setAttribute('type', 'checkbox');
     todoCheckBox.addEventListener('click', (e) => {
-        toggleTodo(todos, todo.id);
-        setTodos(todos);
+        toggleTodo(todo.id);
+        setTodos();
         renderTodos();
     });
 

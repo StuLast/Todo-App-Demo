@@ -1,7 +1,7 @@
 'use strict'
 
-import {setFilters} from './filters';
-import {addTodo, getTodos} from './todos';
+import { setFilters } from './filters';
+import { addTodo } from './todos';
 import renderTodos from './views';
 
 
@@ -18,9 +18,10 @@ document.querySelector('#add-todo').addEventListener('submit', (e) => {
     const dataSource = e.target.elements.inputAddTodo;
     const text = dataSource.value.trim();
     if(!text) {
-        console.log("There is no content to add");
+        ("There is no content to add");
         return;
     }
+
     addTodo (text);
     dataSource.value = ""; 
     renderTodos();

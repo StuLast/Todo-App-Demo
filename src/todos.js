@@ -1,9 +1,9 @@
 'use strict'
 import uuidv4 from 'uuid/v4';
 
+let todos = [];
 //CRUD operations
 //===============
-
 
 const addTodo = (text) => {
     todos.push({
@@ -11,24 +11,26 @@ const addTodo = (text) => {
         text,
         completed: false 
     });
-    setTodos(todos);
+    setTodos();
 }
 
-const getTodos = () => {
+const loadTodos = () => {
     const todosJson = localStorage.getItem('todos');
     try {
-        return todosJson != null ? JSON.parse(todosJson) : [];
+        todos = todosJson != null ? JSON.parse(todosJson) : [];
     } catch (e) {
         console.log('Local storage data is corrupt.  Data lost');
         return [];
     }
 };
 
-const setTodos = (todos) => {
+const getTodos = () => todos;
+
+const setTodos = () => {
     localStorage.setItem('todos', JSON.stringify(todos));
 };
 
-const removeTodo = (todos, id) =>  {
+const removeTodo = (id) =>  {
     const noteIndex = todos.findIndex((todo) => todo.id === id);
 
     if(noteIndex >= 0) {
@@ -36,18 +38,19 @@ const removeTodo = (todos, id) =>  {
     }
 }
 
-const toggleTodo = (todos, id) =>  {
+const toggleTodo = (id) =>  {
     const todo = todos.find((todo) => todo.id === id);
     if(todo) {
         todo.completed = !todo.completed;
     }
 };
-const todos = getTodos();
+
+loadTodos();
 
 export {
     addTodo,
     getTodos,
-    setTodos, 
+    setTodos,
     removeTodo,
     toggleTodo
 }
