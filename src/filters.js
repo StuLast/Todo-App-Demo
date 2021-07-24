@@ -5,17 +5,15 @@ const filters = {
 
 const getFilters = () => filters;
 
-const setFilters = (updates = {}) => {
-    if(!updates) {
-        return;
+const setFilters = ({text, hideCompletedTodos}) => {
+
+    if(typeof text === "string") {
+        filters.text = text;
     }
 
-    if(typeof updates.text === "string") {
-        filters.text = updates.text;
-    }
-
-    if(typeof updates.hideCompletedTodos === "boolean") {
-        filters.hideCompletedTodos = updates.hideCompletedTodos;
+    if(typeof hideCompletedTodos === "boolean") {
+        filters.hideCompletedTodos = 
+        hideCompletedTodos;
     }
 }
 

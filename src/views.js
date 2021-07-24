@@ -1,7 +1,6 @@
 import { getFilters } from "./filters";
 import { toggleTodo, getTodos, removeTodo, setTodos } from "./todos";
 
-const filters = getFilters();
 const todos = getTodos();
 
 const incompleteTodos = (todos) => {
@@ -28,14 +27,15 @@ const sortTodos = (todos) => {
 
 const renderTodos  = () => {
     const todosElement = document.querySelector('#todos');
+    const {text: textFilter, hideCompletedTodos} = getFilters();
     
     //Clear todos list
     todosElement.innerHTML = "";
 
     //Carry out filtering
     const filteredTodos = todos.filter((todo) => {
-        const searchFilterMatch = todo.text.toLowerCase().includes(filters.text.toLowerCase());
-        const completedMatch = filters.hideCompletedTodos ? !todo.completed : true;
+        const searchFilterMatch = todo.text.toLowerCase().includes(textFilter.toLowerCase());
+        const completedMatch = hideCompletedTodos ? !todo.completed : true;
         return searchFilterMatch && completedMatch;
     });
 
