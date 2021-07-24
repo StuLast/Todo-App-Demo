@@ -2,12 +2,12 @@
 
 //Data Storage
 
+import moment from 'moment';
+import uuidv4 from 'uuid/v4';
+
 let todos = getTodos();
 
-const filters = {
-    text: "",
-    hideCompletedTodos: false
-}
+
 
 //startup
 //=======
